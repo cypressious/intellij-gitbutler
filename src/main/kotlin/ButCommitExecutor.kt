@@ -12,7 +12,6 @@ import de.rakhman.gitbutler.model.ButStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.json.Json
 import org.jetbrains.annotations.Nls
 import org.jetbrains.plugins.terminal.TerminalToolWindowManager
@@ -22,7 +21,7 @@ import kotlin.io.path.writeText
 
 private val jsonIgnoreUnknownKeys = Json { ignoreUnknownKeys = true }
 
-class GitButCommitExecutor : CommitExecutor {
+class ButCommitExecutor : CommitExecutor {
     override fun getActionText(): @Nls String {
         return "but commit"
     }

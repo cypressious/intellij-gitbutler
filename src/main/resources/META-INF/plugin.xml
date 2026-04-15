@@ -8,6 +8,6 @@
     <depends>org.jetbrains.plugins.terminal</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <vcs.changes.localCommitExecutor implementation="de.rakhman.gitbutler.GitButCommitExecutor"/>
+        <vcs.changes.localCommitExecutor implementation="de.rakhman.gitbutler.ButCommitExecutor"/>
     </extensions>
 </idea-plugin>
