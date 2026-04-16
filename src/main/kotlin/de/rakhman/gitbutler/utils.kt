@@ -42,6 +42,9 @@ suspend fun showPopup(title: String, options: List<String>, project: Project): S
                 })
                 .setNamerForFiltering { it }
                 .setSelectionMode(ListSelectionModel.SINGLE_SELECTION)
+                .setCancelOnClickOutside(false)
+                .setCancelOnOtherWindowOpen(false)
+                .setCancelOnWindowDeactivation(false)
                 .createPopup()
 
             popup.showCenteredInCurrentWindow(project)
