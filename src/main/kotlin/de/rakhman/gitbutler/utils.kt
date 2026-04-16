@@ -5,10 +5,14 @@ import com.intellij.execution.process.CapturingProcessHandler
 import com.intellij.execution.process.ProcessOutput
 import com.intellij.openapi.application.EDT
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.rd.util.lifetime
+import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.ui.popup.JBPopupListener
 import com.intellij.openapi.ui.popup.LightweightWindowEvent
+import com.intellij.platform.ide.progress.withBackgroundProgress
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.nio.charset.StandardCharsets
@@ -50,6 +54,26 @@ suspend fun showPopup(title: String, options: List<String>, project: Project): S
             popup.showCenteredInCurrentWindow(project)
 
             continuation.invokeOnCancellation { popup.cancel() }
+        }
+    }
+}
+
+fun runCommandWithProgress(
+    project: Project,
+    vcsRoot: String,
+    command: List<String>
+) {
+    val coroutineScope = project.lifetime.coroutineScope
+    coroutineScope.launch {
+        withBackgroundProgress(project, "Running '${command.joinToString(" ")}") {
+            val result = runCliAndWait(vcsRoot, command)
+            if (result.exitCode != 0) {
+                Messages.showErrorDialog(
+                    project,
+                    result.stdout.ifEmpty { "Process exited with code ${result.exitCode}." },
+                    "GitButler"
+                )
+            }
         }
     }
 }

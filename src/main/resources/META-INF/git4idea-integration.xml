@@ -1,0 +1,30 @@
+<idea-plugin>
+    <actions>
+        <group text="GitButler (Virtual Branches)" popup="true">
+            <add-to-group group-id="Git.Branch" anchor="last"/>
+            <action id="de.rakhman.gitbutler.ButApplyAction"
+                    class="de.rakhman.gitbutler.ButApplyAction" text="Apply Virtual Branch">
+            </action>
+            <action id="de.rakhman.gitbutler.ButUnapplyAction"
+                    class="de.rakhman.gitbutler.ButUnapplyAction" text="Unapply Virtual Branch">
+            </action>
+            <action id="de.rakhman.gitbutler.ButPushAction"
+                    class="de.rakhman.gitbutler.ButPushAction" text="Push Virtual Branch">
+            </action>
+            <action id="de.rakhman.gitbutler.ButPrAction"
+                    class="de.rakhman.gitbutler.ButPrAction" text="Create PR">
+            </action>
+        </group>
+
+        <group text="GitButler (Virtual Branches)" popup="true" icon="/icons/logo.png">
+            <add-to-group group-id="Vcs.Log.Toolbar" anchor="last"/>
+            <add-to-group group-id="Vcs.Operations.Popup" anchor="last"/>
+            <action id="de.rakhman.gitbutler.ButPullAction"
+                    class="de.rakhman.gitbutler.ButPullAction" text="Pull and Update Workspace">
+            </action>
+            <action id="de.rakhman.gitbutler.ButBranchAction"
+                    class="de.rakhman.gitbutler.ButBranchAction" text="New Virtual Branch">
+            </action>
+        </group>
+    </actions>
+</idea-plugin>

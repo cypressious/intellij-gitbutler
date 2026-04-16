@@ -22,7 +22,14 @@ Adds support for GitButler in IntelliJ IDEs.
 
 ### Features
 
+- Create New Virtual Branch
 - Commit to Virtual Branch
+- Apply Branch to Workspace
+- Unapply Virtual Branch
+- Push Virtual Branch
+- Create PR
+- Pull & Update Workspace
+
 <!-- Plugin description end -->
 
 ## Installation
