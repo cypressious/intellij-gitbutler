@@ -8,6 +8,9 @@
             <action id="de.rakhman.gitbutler.ButUnapplyAction"
                     class="de.rakhman.gitbutler.ButUnapplyAction" text="Unapply Virtual Branch">
             </action>
+            <action id="de.rakhman.gitbutler.ButDeleteAction"
+                    class="de.rakhman.gitbutler.ButDeleteAction" text="Delete Branch">
+            </action>
             <action id="de.rakhman.gitbutler.ButPushAction"
                     class="de.rakhman.gitbutler.ButPushAction" text="Push Virtual Branch">
             </action>

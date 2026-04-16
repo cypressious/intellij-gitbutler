@@ -10,6 +10,11 @@ import git4idea.repo.GitRepository
 class ButApplyAction : BaseButBranchAction("apply")
 class ButUnapplyAction : BaseButBranchAction("unapply")
 class ButPushAction : BaseButBranchAction("push")
+class ButDeleteAction : BaseButBranchAction("delete") {
+    override fun buildCommand(reference: GitBranch): List<String> {
+        return listOf("but", "branch", "delete", reference.name, "-f")
+    }
+}
 
 abstract class BaseButBranchAction(
     private val command: String,
@@ -21,10 +26,13 @@ abstract class BaseButBranchAction(
         reference: GitBranch
     ) {
         val vcsRoot = repositories.firstOrNull()?.root?.path ?: return
-        val commands = listOf("but", command, reference.name)
+        val commands = buildCommand(reference)
         runCommandWithProgress(project, vcsRoot, commands)
     }
 
+    protected open fun buildCommand(reference: GitBranch): List<String> {
+        return listOf("but", command, reference.name)
+    }
 }
 
 class ButPrAction : ButBaseBranchActionWithInput("PR Title") {

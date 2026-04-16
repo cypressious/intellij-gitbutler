@@ -13,6 +13,7 @@ Adds support for GitButler in IntelliJ IDEs.
 - Commit to Virtual Branch
 - Apply Branch to Workspace
 - Unapply Virtual Branch
+- Delete Branch
 - Push Virtual Branch
 - Create PR
 - Pull & Update Workspace
