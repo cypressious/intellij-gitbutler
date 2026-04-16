@@ -20,7 +20,7 @@ private val jsonIgnoreUnknownKeys = Json { ignoreUnknownKeys = true }
 
 class ButCommitExecutor : CommitExecutor {
     override fun getActionText(): @Nls String {
-        return "but commit"
+        return "Commit to Virtual Branch"
     }
 
     override fun areChangesRequired(): Boolean {
@@ -48,9 +48,9 @@ class ButCommitSession : CommitSession {
 
         val coroutineScope = project.lifetime.coroutineScope
         coroutineScope.launch {
-            withBackgroundProgress(project, "Running but commit") {
+            withBackgroundProgress(project, "Committing to Virtual Branch") {
                 reportSequentialProgress { reporter ->
-                    reporter.indeterminateStep("Getting File IDs")
+                    reporter.indeterminateStep("Getting Status")
 
                     val status = executeButStatus(vcsRoot) ?: return@reportSequentialProgress
 
@@ -58,7 +58,7 @@ class ButCommitSession : CommitSession {
                     val branches = status.stacks.flatMap { it.branches.map { it.name } }
 
                     val branch = if (branches.size > 1) {
-                        showPopup("Select Branch for Commit", branches, project) ?: return@reportSequentialProgress
+                        showPopup("Select Virtual Branch for Commit", branches, project) ?: return@reportSequentialProgress
                     } else {
                         branches.singleOrNull() ?: return@reportSequentialProgress
                     }
