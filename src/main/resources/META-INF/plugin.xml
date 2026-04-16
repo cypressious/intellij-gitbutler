@@ -2,7 +2,7 @@
 <idea-plugin>
     <id>de.rakhman.gitbutler</id>
     <name>GitButler</name>
-    <vendor>cypressious</vendor>
+    <vendor>Kirill Rakhman</vendor>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.terminal</depends>

@@ -19,6 +19,10 @@
 
 <!-- Plugin description -->
 Adds support for GitButler in IntelliJ IDEs.
+
+### Features
+
+- Commit to Virtual Branch
 <!-- Plugin description end -->
 
 ## Installation
