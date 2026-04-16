@@ -65,7 +65,7 @@ fun runCommandWithProgress(
 ) {
     val coroutineScope = project.lifetime.coroutineScope
     coroutineScope.launch {
-        withBackgroundProgress(project, "Running '${command.joinToString(" ")}") {
+        withBackgroundProgress(project, "Running '${command.joinToString(" ")}'") {
             val result = runCliAndWait(vcsRoot, command)
             if (result.exitCode != 0) {
                 Messages.showErrorDialog(
