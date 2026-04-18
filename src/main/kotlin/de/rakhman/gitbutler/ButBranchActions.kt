@@ -19,6 +19,15 @@ class ButDeleteAction : BaseButBranchAction("delete") {
 abstract class BaseButBranchAction(
     private val command: String,
 ) : GitSingleBranchAction() {
+    override fun updateIfEnabledAndVisible(
+        e: AnActionEvent,
+        project: Project,
+        repositories: List<GitRepository>,
+        reference: GitBranch
+    ) {
+        e.presentation.isEnabledAndVisible = repositories.any { it.currentBranch?.name == BRANCH_NAME_GITBUTLER_WORKSPACE }
+    }
+
     override fun actionPerformed(
         e: AnActionEvent,
         project: Project,
@@ -47,6 +56,15 @@ class ButPrAction : ButBaseBranchActionWithInput("PR Title") {
 }
 
 abstract class ButBaseBranchActionWithInput(val dialogTitle: String) : GitSingleBranchAction() {
+    override fun updateIfEnabledAndVisible(
+        e: AnActionEvent,
+        project: Project,
+        repositories: List<GitRepository>,
+        reference: GitBranch
+    ) {
+        e.presentation.isEnabledAndVisible = repositories.any { it.currentBranch?.name == BRANCH_NAME_GITBUTLER_WORKSPACE }
+    }
+
     override fun actionPerformed(
         e: AnActionEvent,
         project: Project,
