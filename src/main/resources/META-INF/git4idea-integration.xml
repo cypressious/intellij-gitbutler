@@ -28,6 +28,12 @@
             <action id="de.rakhman.gitbutler.ButBranchAction"
                     class="de.rakhman.gitbutler.ButBranchAction" text="New Virtual Branch">
             </action>
+            <action id="de.rakhman.gitbutler.ButSetupAction"
+                    class="de.rakhman.gitbutler.ButSetupAction" text="Setup GtButler Workspace">
+            </action>
+            <action id="de.rakhman.gitbutler.ButTeardownAction"
+                    class="de.rakhman.gitbutler.ButTeardownAction" text="Tear down GtButler Workspace">
+            </action>
         </group>
     </actions>
 </idea-plugin>

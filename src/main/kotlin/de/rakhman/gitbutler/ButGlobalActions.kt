@@ -48,3 +48,14 @@ class ButBranchAction : ButBaseGlobalAction(enabledInWorkspace = true) {
     }
 }
 
+class ButSetupAction : ButBaseGlobalAction(enabledInWorkspace = false) {
+    override fun actionPerformed(project: Project, vcsRoot: String) {
+        runCommandWithProgress(project, vcsRoot, listOf("but", "setup"))
+    }
+}
+
+class ButTeardownAction : ButBaseGlobalAction(enabledInWorkspace = true) {
+    override fun actionPerformed(project: Project, vcsRoot: String) {
+        runCommandWithProgress(project, vcsRoot, listOf("but", "teardown"))
+    }
+}

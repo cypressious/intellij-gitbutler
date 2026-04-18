@@ -9,6 +9,7 @@ Inofficial plugin for [GitButler](https://gitbutler.com/) support in IntelliJ ID
 
 ### Features
 
+- Set up and tear down Workspace
 - Create New Virtual Branch
 - Commit to Virtual Branch
 - Apply Branch to Workspace
