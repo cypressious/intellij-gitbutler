@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/31299.svg)](https://plugins.jetbrains.com/plugin/31299)
 
 <!-- Plugin description -->
-Adds support for GitButler in IntelliJ IDEs.
+Inofficial plugin for [GitButler](https://gitbutler.com/) support in IntelliJ IDEs. Requires the GitButler CLI to be in `PATH`.
 
 ### Features
 
