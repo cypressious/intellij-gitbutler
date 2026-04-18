@@ -3,10 +3,11 @@ package de.rakhman.gitbutler
 import com.intellij.execution.configurations.GeneralCommandLine
 import com.intellij.execution.process.CapturingProcessHandler
 import com.intellij.execution.process.ProcessOutput
+import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.EDT
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.rd.util.lifetime
-import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.ui.popup.JBPopupListener
 import com.intellij.openapi.ui.popup.LightweightWindowEvent
@@ -68,12 +69,15 @@ fun runCommandWithProgress(
         withBackgroundProgress(project, "Running '${command.joinToString(" ")}'") {
             val result = runCliAndWait(vcsRoot, command)
             if (result.exitCode != 0) {
-                Messages.showErrorDialog(
-                    project,
-                    result.stdout.ifEmpty { "Process exited with code ${result.exitCode}." },
-                    "GitButler"
-                )
+                notifyError(project, result.stdout.ifEmpty { "Process exited with code ${result.exitCode}." })
             }
         }
     }
+}
+
+fun notifyError(project: Project, message: String) {
+    NotificationGroupManager.getInstance()
+        .getNotificationGroup("de.rakhman.gitbutler.error")
+        .createNotification(message, NotificationType.ERROR)
+        .notify(project)
 }

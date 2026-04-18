@@ -9,5 +9,6 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <vcs.changes.localCommitExecutor implementation="de.rakhman.gitbutler.ButCommitExecutor"/>
+        <notificationGroup id="de.rakhman.gitbutler.error" displayType="BALLOON"/>
     </extensions>
 </idea-plugin>

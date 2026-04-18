@@ -1,18 +1,14 @@
 package de.rakhman.gitbutler
 
-import com.intellij.openapi.application.EDT
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.rd.util.lifetime
-import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.NlsSafe
 import com.intellij.openapi.vcs.ProjectLevelVcsManager
 import com.intellij.openapi.vcs.changes.*
 import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.intellij.platform.util.progress.reportSequentialProgress
 import de.rakhman.gitbutler.model.ButStatus
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 import org.jetbrains.annotations.Nls
 
@@ -85,9 +81,7 @@ class ButCommitSession : CommitSession {
                     val result = runCliAndWait(vcsRoot, command)
 
                     if (result.exitCode != 0) {
-                        withContext(Dispatchers.EDT) {
-                            Messages.showErrorDialog(project, result.stdout, "GitButler")
-                        }
+                        notifyError(project, result.stdout.ifEmpty { "Process exited with code ${result.exitCode}." })
                     }
                 }
             }
