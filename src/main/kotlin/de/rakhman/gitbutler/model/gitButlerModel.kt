@@ -32,3 +32,9 @@ class ButAssignedChange(
     @Serializable
     val filePath: String,
 )
+
+@Serializable
+class ButError(
+    @Serializable
+    val message: String
+)

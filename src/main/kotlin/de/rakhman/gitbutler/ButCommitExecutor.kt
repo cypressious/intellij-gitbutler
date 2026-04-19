@@ -1,5 +1,7 @@
 package de.rakhman.gitbutler
 
+import com.intellij.execution.process.ProcessOutput
+import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.rd.util.lifetime
 import com.intellij.openapi.util.NlsSafe
@@ -7,6 +9,7 @@ import com.intellij.openapi.vcs.ProjectLevelVcsManager
 import com.intellij.openapi.vcs.changes.*
 import com.intellij.platform.ide.progress.withBackgroundProgress
 import com.intellij.platform.util.progress.reportSequentialProgress
+import de.rakhman.gitbutler.model.ButError
 import de.rakhman.gitbutler.model.ButStatus
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
@@ -48,7 +51,7 @@ class ButCommitSession : CommitSession {
                 reportSequentialProgress { reporter ->
                     reporter.indeterminateStep("Getting Status")
 
-                    val status = executeButStatus(vcsRoot) ?: return@reportSequentialProgress
+                    val status = executeButStatus(vcsRoot, project) ?: return@reportSequentialProgress
 
                     val idsByFile = getFileIds(status)
                     val branches = status.stacks.flatMap { it.branches.map { it.name } }
@@ -81,7 +84,7 @@ class ButCommitSession : CommitSession {
                     val result = runCliAndWait(vcsRoot, command)
 
                     if (result.exitCode != 0) {
-                        notifyError(project, result.stdout.ifEmpty { "Process exited with code ${result.exitCode}." })
+                        notifyButError(result, project)
                     }
                 }
             }
@@ -101,12 +104,19 @@ class ButCommitSession : CommitSession {
         }
     }
 
-    private fun executeButStatus(vcsRoot: String): ButStatus? {
+    private fun executeButStatus(vcsRoot: String, project: Project): ButStatus? {
         val output = runCliAndWait(vcsRoot, listOf("but", "status", "--json"))
         return if (output.exitCode == 0) {
             jsonIgnoreUnknownKeys.decodeFromString<ButStatus>(output.stdout)
         } else {
+            notifyButError(output, project)
             null
         }
+    }
+
+    private fun notifyButError(output: ProcessOutput, project: Project) {
+        require(output.exitCode != 0) { "Non-zero exit code expected." }
+        val error = jsonIgnoreUnknownKeys.decodeFromString<ButError>(output.stdout)
+        notifyError(project, error.message)
     }
 }
