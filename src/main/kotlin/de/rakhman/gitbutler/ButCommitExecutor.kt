@@ -46,6 +46,12 @@ class ButCommitSession : CommitSession {
         coroutineScope.launch {
             withBackgroundProgress(project, "Committing to Virtual Branch") {
                 reportSequentialProgress { reporter ->
+                    reporter.indeterminateStep("Checking Workspace")
+                    if (!isCurrentBranchWorkspace(vcsRoot)) {
+                        notifyError(project, "Commit to Virtual Branch is only available in workspace mode.")
+                        return@reportSequentialProgress
+                    }
+
                     reporter.indeterminateStep("Getting Status")
 
                     val status = executeButStatus(vcsRoot) ?: return@reportSequentialProgress
@@ -108,5 +114,10 @@ class ButCommitSession : CommitSession {
         } else {
             null
         }
+    }
+
+    private fun isCurrentBranchWorkspace(vcsRoot: String): Boolean {
+        val output = runCliAndWait(vcsRoot, listOf("git", "branch", "--show-current"))
+        return output.exitCode == 0 && isWorkspaceBranch(output.stdout)
     }
 }

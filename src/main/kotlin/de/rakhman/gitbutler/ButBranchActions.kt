@@ -25,7 +25,7 @@ abstract class BaseButBranchAction(
         repositories: List<GitRepository>,
         reference: GitBranch
     ) {
-        e.presentation.isEnabledAndVisible = repositories.any { it.currentBranch?.name == BRANCH_NAME_GITBUTLER_WORKSPACE }
+        e.presentation.isEnabledAndVisible = repositories.any { isWorkspaceBranch(it.currentBranch?.name) }
     }
 
     override fun actionPerformed(
@@ -62,7 +62,7 @@ abstract class ButBaseBranchActionWithInput(val dialogTitle: String) : GitSingle
         repositories: List<GitRepository>,
         reference: GitBranch
     ) {
-        e.presentation.isEnabledAndVisible = repositories.any { it.currentBranch?.name == BRANCH_NAME_GITBUTLER_WORKSPACE }
+        e.presentation.isEnabledAndVisible = repositories.any { isWorkspaceBranch(it.currentBranch?.name) }
     }
 
     override fun actionPerformed(
@@ -89,5 +89,4 @@ abstract class ButBaseBranchActionWithInput(val dialogTitle: String) : GitSingle
 
     protected abstract fun dialogText(reference: GitBranch): String
 }
-
 
