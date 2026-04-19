@@ -21,7 +21,7 @@ abstract class ButBaseGlobalAction(
 
     override fun update(e: AnActionEvent) {
         val repositories = GitBranchActionsUtil.getAffectedRepositories(e)
-        e.presentation.isEnabledAndVisible = repositories.any { it.currentBranch?.name == BRANCH_NAME_GITBUTLER_WORKSPACE } == enabledInWorkspace
+        e.presentation.isEnabledAndVisible = repositories.any { isWorkspaceBranch(it.currentBranch?.name) } == enabledInWorkspace
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread {
